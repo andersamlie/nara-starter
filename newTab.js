@@ -135,6 +135,18 @@ document.addEventListener("DOMContentLoaded", () => {
     hoverListeners = [];
   }
 
+  const emojiButtons = document.querySelectorAll(".emoji-btn");
+
+  emojiButtons.forEach((btn) => {
+    btn.addEventListener("click", () => {
+      emojiButtons.forEach((b) => b.classList.remove("selected"));
+      btn.classList.add("selected");
+      const mood = btn.ariaLabel;
+      btn.classList.add(mood);
+    });
+  });
+
+
   deerAreas.forEach((area) => {
     const circle = document.getElementById(`${area.id}-circle`);
     circle.style.backgroundImage = `url(${area.circleImage})`;
