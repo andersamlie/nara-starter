@@ -363,6 +363,22 @@ document.addEventListener("DOMContentLoaded", () => {
     ],
   };
 
+  const quotePool = [
+    "You are never too old to set another goal or to dream a new dream. – C.S. Lewis",
+    "Believe in yourself and all that you are. Know that there is something inside you that is greater than any obstacle. – Christian D. Larson",
+    "Happiness is not something ready made. It comes from your own actions. – Dalai Lama",
+    "Start where you are. Use what you have. Do what you can. – Arthur Ashe",
+    "Success is not final, failure is not fatal: it is the courage to continue that counts. – Winston Churchill",
+    "The only limit to our realization of tomorrow is our doubts of today. – Franklin D. Roosevelt",
+    "Your present circumstances don't determine where you can go; they merely determine where you start. – Nido Qubein",
+    "In the middle of every difficulty lies opportunity. – Albert Einstein",
+    "The best way to predict the future is to create it. – Peter Drucker",
+    "Act as if what you do makes a difference. It does. – William James",
+    "Don’t watch the clock; do what it does. Keep going. – Sam Levenson",
+    "With the new day comes new strength and new thoughts. – Eleanor Roosevelt",
+  ];
+
+
   // Function to get 5 random tasks from a category
   function getRandomTasks(category) {
     const tasks = taskPool[category];
@@ -400,7 +416,6 @@ document.addEventListener("DOMContentLoaded", () => {
           categoriesContainer.classList.add("hidden");
           hideHoverCircles(); // Hide hover circles when the final image is shown
           document.getElementById("welcome-message").classList.add("hidden");
-
           // Create and show thank you message
           const thankYouMessage = document.createElement("div");
           thankYouMessage.className = "thank-you-message";
@@ -409,6 +424,7 @@ document.addEventListener("DOMContentLoaded", () => {
         });
       } else {
         renderTasks(tasks, backgroundIndex, selectedCategory);
+        renderQuote();
         if (categoriesHidden) {
           categoriesContainer.classList.add("hidden");
           hideHoverCircles(); // Hide hover circles when categories are hidden
@@ -421,6 +437,7 @@ document.addEventListener("DOMContentLoaded", () => {
     } else {
       //categoriesContainer.classList.remove("hidden");
       document.getElementById("welcome-message").classList.remove("hidden");
+      document.getElementById("quote-box").style.display = "none";
       showHoverCircles(); // Show hover circles in the initial state
       changeBackgroundWithSlide(initialBackground);
     }
@@ -454,6 +471,7 @@ document.addEventListener("DOMContentLoaded", () => {
         changeBackgroundWithSlide(backgroundSets[category][0]).then(() => {
           // Render the empty tasks
           renderTasks(tasks, 0, category);
+          renderQuote();
         });
       } else {
         const tasks = hardcodedTasks[category].map((task) => ({
@@ -472,6 +490,7 @@ document.addEventListener("DOMContentLoaded", () => {
         // Set the background to the category's origin photo (e.g., A.jpg)
         changeBackgroundWithSlide(backgroundSets[category][0]).then(() => {
           renderTasks(tasks, 0, category);
+          renderQuote();
         });
       }
 
@@ -520,6 +539,7 @@ document.addEventListener("DOMContentLoaded", () => {
     // Reset the UI to the initial state
     tasksContainer.classList.add("hidden");
     document.getElementById("welcome-message").classList.remove("hidden");
+    document.getElementById("quote-box").style.display = "none";
     changeBackgroundWithSlide(initialBackground);
 
     // Remove thank you message if it exists
@@ -631,6 +651,17 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
+  function getRandomQuote() {
+    return quotePool[Math.floor(Math.random() * quotePool.length)];
+  }  
+
+  function renderQuote() {
+    const quoteBox = document.getElementById("quote-box");
+    quoteBox.textContent = getRandomQuote();
+    quoteBox.style.display = "block"; // Show quote
+  }
+  
+
   function renderTasks(tasks, backgroundIndex, category) {
     const tasksHeader =
       document.getElementById("tasks-header") || document.createElement("div");
@@ -708,6 +739,7 @@ document.addEventListener("DOMContentLoaded", () => {
           ).then(() => {
             tasksContainer.classList.add("hidden");
             categoriesContainer.classList.add("hidden");
+            renderQuote();
             hideHoverCircles(); // Hide hover circles when the final image is shown
             document.getElementById("welcome-message").classList.add("hidden");
             // Create and show thank you message
